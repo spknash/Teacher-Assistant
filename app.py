@@ -83,7 +83,8 @@ def submit():
     
 
     # add to database here
-    print(f"Received name: {name}")
+    print(f"Received template: {template}")
+    print(f"Received complete: {complete}")
     with open('skeletons/user_repos.html', 'r') as file:
         html_content = file.read()
     return render_template_string(html_content)   

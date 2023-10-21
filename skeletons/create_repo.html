@@ -28,6 +28,13 @@
         var owner = document.getElementById('owner').value;
         var template = document.getElementById('template').value;
         var complete = document.getElementById('complete').value;
+
+        var formData = {
+            name: name,
+            owner: owner,
+            template: template,
+            complete: complete
+        };
         
     
         // Send data to the Flask server
@@ -36,7 +43,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name: name},{owner: owner}, {template: template} ,{complete: complete} )
+            body: JSON.stringify(formData)
         })
         .then(response => response.json())
         .then(data => {
