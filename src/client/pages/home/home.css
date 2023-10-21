@@ -8,18 +8,31 @@ h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+#container {
+    margin-top: 150px;
+    text-align: center;
+}
+
 #overview {
     background-color: grey;
-    height: 40px;
-    width: 75px;
+    height: 50px;
+    width: 120px;
+    font-size: large;
+    cursor: pointer;
+}
+
+#explore {
+    background-color: grey;
+    height: 50px;
+    width: 120px;
     font-size: large;
     cursor: pointer;
 }
 
 #my-repositories {
     background-color: grey;
-    height: 40px;
-    width: 75px;
+    height: 50px;
+    width: 120px;
     font-size: large;
     cursor: pointer;
 }
