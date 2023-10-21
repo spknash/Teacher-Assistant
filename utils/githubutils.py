@@ -19,12 +19,21 @@ def fork_repo(token):
     else:
         print("Error:", response.content)
 
-def get_repo_content(owner, repo, path=""):
+def get_repo_content(_URL, path=""):
+
+    "https://github.com/davibenica/BLACKJACK-TEMPLATE"
+    shortened = _URL[8:]
+    comp_list = shortened.split("/")
+    #print("here")
+    #print(comp_list)
+    owner = comp_list[1]
+    repo = comp_list[2]
     url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
     response = requests.get(url)
     data = response.json()
 
     content_list = []
+    
 
     for item in data:
         if item['type'] == 'file':
@@ -42,13 +51,13 @@ def fetch_file_content(download_url):
 
     return response.text
 
-owner = "spknash"
-repo = "docker_class"
-repo_content_string = get_repo_content(owner, repo)
-print(repo_content_string)
+# owner = "spknash"
+# repo = "docker_class"
+# URL = "https://github.com/davibenica/BLACKJACK-TEMPLATE"
+# repo_content_string = get_repo_content(URL)
+# print(repo_content_string)
 
 
-get_repo_content("spknash", "docker_class")
 
 #The structure starts at the root directory, a file starts with the identifier "FILE:" and a directory starts with
 #identifier "DIRECTORY:"

@@ -51,7 +51,8 @@ class TeacherAssistant:
             else:
                 ai_message_list.append(message)
             index += 1
-
+        print(len(user_message_list))
+        print(len(ai_message_list))
         for i in range(len(user_message_list)):
             self.memory.save_context({"question":user_message_list[i]},{"chat_history":ai_message_list[i]})
 
@@ -73,6 +74,7 @@ class TeacherAssistant:
     def get_memory(self):
         message_list_str = []
         message_list =  self.memory.buffer_as_messages
+
         for message in message_list:
             message_list_str.append(message.content)
 
