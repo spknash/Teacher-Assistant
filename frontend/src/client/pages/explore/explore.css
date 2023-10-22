@@ -8,21 +8,69 @@ h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
 #container {
     text-align: center;
     margin-top: 100px;
 }
 
+.repo-1-container {
+    margin-left: 1%;
+    position: relative;
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.repo-2-container {
+    margin-top: 20px;
+    margin-left: 1%;
+    position: relative;
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.repo-3-container {
+    margin-top: 20px;
+    margin-left: 1%;
+    position: relative;
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.repo-4-container {
+    margin-top: 20px;
+    margin-left: 1%;
+    position: relative;
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.repo-5-container {
+    margin-top: 20px;
+    margin-left: 1%;
+    position: relative;
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+}
+
 #teacher-assistant-aref {
     color: blue;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 #fork-btn {
     background-color: lightgreen;
-    height: 40px;
+    height: 25px;
     width: 75px;
-    font-size: large;
+    font-size: 15px;
     cursor: pointer;
 }

@@ -1,7 +1,15 @@
 // allows the user to see all of their repos
-// function viewRepos() {
-    
-// }
+function viewRepos() {
+    const h1 = document.createElement("h1");
+    h1.innerHTML = "My Repositiories";
+    h1.style.marginTop = "50px";
+    h1.style.textAlign = "center";
+    h1.style.fontFamily = 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    const ul = document.createElement("ul");
+    const li = document.getElementsByTagName("li");
+    ul.appendChild(li);
+}
 
 // Prompts the user to create a new repo
 function createNewRepo() {
@@ -36,6 +44,9 @@ function createNewRepo() {
     const repoNameInput = document.createElement("input");
     repoNameInput.setAttribute("type", "text");
     repoNameInput.style.fontSize = "22px";
+
+    const templateLabel = document.createElement("input");
+    templateLabel.innerHTML = "Template";
     
     const repoDescriptionLabel = document.createElement("label");
     repoDescriptionLabel.innerHTML = "Repository Description";
@@ -47,6 +58,11 @@ function createNewRepo() {
     repoDescriptionTextArea.setAttribute("type", "text");
     repoDescriptionTextArea.style.width = "500px";
     repoDescriptionTextArea.style.height = "200px";
+
+    // const templateLink = document.createElement("a");
+    // templateLink.innerHTML = "Teacher Assistant";
+    // templateLink.style.fontSize = "20px";
+    // templateLink.setAttribute("href", "https://github.com/spknash/Teacher-Assistant");
 
     const form = document.createElement("form");
     
@@ -65,6 +81,7 @@ function createNewRepo() {
     div.appendChild(repoNameInput);
     div.appendChild(repoDescriptionLabel);
     div.appendChild(repoDescriptionTextArea);
+    // div.appendChild(templateLink);
     div.appendChild(createButton);
 
     // Appends labels and inputs to the form
@@ -86,6 +103,8 @@ function createNewRepo() {
     form.appendChild(document.createElement("br"));
     form.appendChild(repoDescriptionTextArea);
     form.appendChild(document.createElement("br"));
+    // form.appendChild(templateLink);
+    // form.appendChild(document.createElement("br"));
     form.appendChild(createButton);
     form.appendChild(div);
 
@@ -101,15 +120,46 @@ function createNewRepo() {
         const li = document.createElement("li");
         let repoData = repoName + "\n" + repoDesc;
         li.append(repoData);
+        document.getElementById("myUL").appendChild(li);
     }
 }
 
 function repoClicked() {
     const h1 = document.createElement("h1");
-    h1.innerHTML = "Overview";
-    const h2 = document.createElement("h2");
-    h2.innerHTML = "Teammates";
-    const repo = document.getElementById("repos")
+    h1.innerHTML = "My Repositories";
+    const outerDiv = document.createElement("div");
+    outerDiv.style.textAlign = "center";
+
+    const overviewDiv = document.createElement("div");
+    overviewDiv.style.textAlign = "left";
+    const overviewHeader = document.createElement("h1");
+    overviewHeader.innerHTML = "Overview";
+    overviewHeader.style.fontFamily = 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+
+    const teammatesDiv = document.createElement("div");
+    teammatesDiv.style.textAlign = "right";
+    const teammatesHeader = document.createElement("h2");
+    teammatesHeader.innerHTML = "Teammates";
+    teammatesHeader.style.fontFamily = 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+
+    const repoLinkDiv = document.createElement("div");
+    repoLinkDiv.style.bottom = "10px";
+
+    const talkTADiv = document.createElement("div");
+    talkTADiv.style.textAlign = "left";
+
+    const talkTAbutton = document.createElement("button");
+    talkTAbutton.style.bottom = "10px"
+    talkTAbutton.style.fontSize = "25px"
+    talkTAbutton.style.color = "lightgreen";
+
+    // const repoLink = document.createElement("a");
+    // repoLink.setAttribute("href", "javascript:https://github.com/spknash/Teacher-Assistant");
+
+    outerDiv.appendChild(overviewDiv);
+    outerDiv.appendChild(teammatesDiv);
+    outerDiv.appendChild(repoLinkDiv);
+    outerDiv.appendChild(talkTADiv);
 }
 
 // Prompts the user to remove a repo
