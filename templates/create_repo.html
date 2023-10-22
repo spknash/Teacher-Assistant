@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation</title>
+</head>
+<body>
+    <!-- dynamically fill with mongo db later -->
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <label for="owner">Owner:</label>
+        <input type="text" id="owner" name="owner">
+        <label for="template">Template:</label>
+        <input type="text" id="template" name="template">
+        <label for="complete">Complete:</label>
+        <input type="text" id="complete" name="complete">
+        <input type="submit" value="Submit">
+    </form>
+    
+    <script>
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevents the form from submitting in the traditional way.
+    
+        var name = document.getElementById('name').value;
+        var owner = document.getElementById('owner').value;
+        var template = document.getElementById('template').value;
+        var complete = document.getElementById('complete').value;
+
+        var formData = {
+            name: name,
+            owner: owner,
+            template: template,
+            complete: complete
+        };
+        
+    
+        // Send data to the Flask server
+        fetch('/user/createrepo/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Redirect to the specified URL
+                window.location.href = data.redirect_url;
+            } else {
+                alert('Form submission failed!');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+    </script>
+    
+
+</body>
+</html>
