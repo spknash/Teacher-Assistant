@@ -6,6 +6,8 @@ from utils.dp import*
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 
+
+
 # Initialize OAuth
 oauth = OAuth(app)
 
@@ -117,18 +119,47 @@ def user_specific_repo(repo_name):
     
     return 0
 
-@app.route('/user/repos/<string:repo_name>/talkTA')
+@app.route('/user/repos/<string:repo_name>/showchat')
+def show_chat(repo_name):
+    return render_template('chat_ui.html', repo=repo_name)
+
+@app.route('/user/repos/<string:repo_name>/talkTA', methods=['POST'])
 def repo_talkTA(repo_name):
-    if repo_name=="example_repo":
-        sample_repo = {}
-        sample_repo["type"] = "project"
-        sample_repo["completed_repo_url"] = "https://github.com/solomonleo12345/BLACKJACK-Game"
-        sample_repo["template_repo_url"] =  "https://github.com/davibenica/BLACKJACK-TEMPLATE"
+    data = request.json
+    q = data['question']
+    project = get_project_from_db(repo_name)
+    project_name = project['project_name']
+    desc = project['project_description']
+    repo = project['template_repo_url']
+    complete = project['completed_repo_url']
+    repo_encoding = get_repo_content(repo)
+    complete_encoding = get_repo_content(complete)
+    BASE_URL = 'http://127.0.0.1:8080'
+    # Use a session object for all requests
+    session = requests.Session()
+
+
+    def ask_question(question):
+        """Sends a question to the server's /ask endpoint and prints the response."""
+        headers = {
+            'Content-Type': 'application/json'
+        }
+        data = {
+            'message': question,
+            'complete': complete_encoding,
+            'boiler': repo_encoding
+        }
+        response = session.post(f'{BASE_URL}/ask', headers=headers, data=json.dumps(data))  # Use session.post instead of requests.post
         
-        print(get_repo_content(sample_repo["template_repo_url"]))
-        return "at talkTA"
-    else:
-        return "at talkTA"
+        if response.status_code == 200:
+            print(response.json()["response"])
+            return response.json()["response"] 
+        else:
+            return "Failed to get an answer."
+        
+    response = ask_question(q)
+    print({"response":response})
+    return jsonify({"response":response})
 
 
 

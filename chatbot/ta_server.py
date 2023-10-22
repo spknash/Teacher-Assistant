@@ -39,13 +39,13 @@ def ask():
     ta = teach_assist.TeacherAssistant(ta_data)  
     
     user_message = request.json.get('message', '')
+
     # Use the `ta` object to get the answer
     #load_to_context = jsonify({"input": user_message}, {"output": "answer"})
     #print(load_to_context)
-    completed_code = "print(hello world)"
-    boilerplate = "print()"
+    completed_code = request.json.get('complete', '')
+    boilerplate = request.json.get('boiler', '')
     answer = ta.query_chain(user_message, completed_code, boilerplate)
-    print("HEEEE")
     session['ta_data'] = ta.get_memory() 
     session.modified = True
     print(session["ta_data"]) # Save updated data back to the session
