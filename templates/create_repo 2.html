@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="create_repo.css">
+    <title>Navigation</title>
+</head>
+
+<body>
+    <h1>Create a New Repository</h1>
+    <br>
+    <!-- dynamically fill with mongo db later -->
+    <form id="myForm">
+        <div id="container">
+            <div>
+                <label for="name" id="name-label">Repository Name</label>
+                <br>
+                <input type="text" id="name" name="name">
+            </div>
+            <br>
+            <div>
+                <label for="owner" id="owner-label">Owner</label>
+                <br>
+                <input type="text" id="owner" name="owner">
+            </div>
+            <br>
+            <div>
+                <label for="template" id="template-label">Template</label>
+                <br>
+                <input type="text" id="template" name="template">
+            </div>
+            <br>
+            <div>
+                <label for="complete" id="complete-label">Complete</label>
+                <br>
+                <input type="text" id="complete" name="complete">
+            </div>
+            <br>
+            <input type="submit" id="submit-input" value="Create repository">
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevents the form from submitting in the traditional way.
+
+            var name = document.getElementById('name').value;
+            var owner = document.getElementById('owner').value;
+            var template = document.getElementById('template').value;
+            var complete = document.getElementById('complete').value;
+
+            var formData = {
+                name: name,
+                owner: owner,
+                template: template,
+                complete: complete
+            };
+
+
+            // Send data to the Flask server
+            fetch('/user/createrepo/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Redirect to the specified URL
+                        window.location.href = data.redirect_url;
+                    } else {
+                        alert('Form submission failed!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+
+
+</body>
+
+</html>
