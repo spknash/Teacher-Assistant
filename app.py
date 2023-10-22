@@ -26,7 +26,7 @@ github = oauth.register(
 @app.route('/')
 def index():
     #session.clear()
-    return 'Welcome to our Flask app! <a href="/login">Login with GitHub</a>'
+    return '<h1">Buddy!</h1> <a href="/login">Login with GitHub</a>'
 
 @app.route('/login')
 def login():
