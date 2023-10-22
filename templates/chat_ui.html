@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat UI</title>
+</head>
+<body>
+    <div id="chatHistory"></div> <!-- This is where the chat history will be displayed -->
+    
+    <div>
+        <input type="text" id="userInput" placeholder="Ask something...">
+        <button onclick="sendQuestion()">Ask</button>
+    </div>
+
+    <script>
+        function sendQuestion() {
+            let userInput = document.getElementById("userInput").value;
+            document.getElementById("chatHistory").innerHTML += `<p>You: ${userInput}</p>`;
+            
+            fetch('/user/repos/{{repo}}/talkTA', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "question": userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("chatHistory").innerHTML += `<p>Bot: ${data.response}</p>`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
