@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, session, render_template_string, request, jsonify
+from flask import Flask, redirect, url_for, session, render_template_string, request, jsonify, render_template
 import requests, json
 from authlib.integrations.flask_client import OAuth
 from utils.githubutils import*
@@ -50,7 +50,7 @@ def github_login():
 
 @app.route('/user/home')
 def user_projects():
-    with open('skeletons/user_home.html', 'r') as file:
+    with open('templates/user_home.html', 'r') as file:
         html_content = file.read()
     return render_template_string(html_content)
     # return "Logged in. Projects page here"
@@ -58,15 +58,17 @@ def user_projects():
 @app.route('/user/repos')
 def user_repos():
     # dynamically create html page to serve
-    with open('skeletons/user_repos.html', 'r') as file:
-        html_content = file.read()
-    return render_template_string(html_content)
+    list_of_projects = get_all_projects_from_db()
+    print(list_of_projects)
+
+    
+    return render_template('user_repos.html', repos=list_of_projects)
 
 
 @app.route('/user/createrepo')
 def user_createrepo():
     # submit data to database on submission of form
-    with open('skeletons/create_repo.html', 'r') as file:
+    with open('templates/create_repo.html', 'r') as file:
         html_content = file.read()
     return render_template_string(html_content)
 
@@ -85,9 +87,9 @@ def submit():
     # add to database here
     print(f"Received template: {template}")
     print(f"Received complete: {complete}")
-    with open('skeletons/user_repos.html', 'r') as file:
+    with open('templates/user_repos.html', 'r') as file:
         html_content = file.read()
-    return render_template_string(html_content)   
+    return jsonify({"success": True, "redirect_url": url_for('user_repos')}) 
 
 @app.route('/user/repos/<string:repo_name>')
 def user_specific_repo(repo_name):
@@ -98,9 +100,19 @@ def user_specific_repo(repo_name):
         sample_repo["type"] = "project"
         sample_repo["completed_repo_url"] = "https://github.com/solomonleo12345/BLACKJACK-Game"
         sample_repo["template_repo_url"] =  "https://github.com/davibenica/BLACKJACK-TEMPLATE"
-        with open('skeletons/example_repo.html', 'r') as file:
+        with open('templates/example_repo.html', 'r') as file:
             html_content = file.read()
         return render_template_string(html_content)
+    else:
+        project = get_project_from_db(repo_name)
+        project_name = project['project_name']
+        desc = project['project_description']
+        repo = project['template_repo_url']
+
+        return render_template('example_repo.html', 
+                           project_name=project['project_name'], 
+                           project_description=project['project_description'], 
+                           template_repo_url=project['template_repo_url'])
 
     
     return 0
@@ -114,6 +126,8 @@ def repo_talkTA(repo_name):
         sample_repo["template_repo_url"] =  "https://github.com/davibenica/BLACKJACK-TEMPLATE"
         
         print(get_repo_content(sample_repo["template_repo_url"]))
+        return "at talkTA"
+    else:
         return "at talkTA"
 
 

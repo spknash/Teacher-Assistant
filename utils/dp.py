@@ -32,9 +32,10 @@ def get_project_from_db(project_name):
         return "Project not found in the database"
     
 def get_all_projects_from_db():
-    results = collection.find({"type": "project"})
+    results = list(collection.find({"type": "project"}))
+    #print(results)
 
-    if results.count() == 0:
+    if len(results) == 0:
         return "No projects found in the database"
 
     list_of_projects = []

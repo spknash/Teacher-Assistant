@@ -47,7 +47,12 @@
         })
         .then(response => response.json())
         .then(data => {
-            alert(data.message);
+            if (data.success) {
+                // Redirect to the specified URL
+                window.location.href = data.redirect_url;
+            } else {
+                alert('Form submission failed!');
+            }
         })
         .catch(error => {
             console.error('Error:', error);
