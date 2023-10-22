@@ -1,0 +1,68 @@
+body {
+    background-color: dodgerblue;
+}
+
+h1 {
+    margin-top: 50px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* p {
+    margin-top: 75px;
+    text-align: center;
+    font-size: 25px;
+} */
+
+#container {
+    margin-top: 100px;
+}
+
+p {
+    font-size: 20px;
+}
+
+#blackjack-aref {
+    color: blue;
+    font-size: 20px;
+}
+
+#repo-1 {
+    margin-top: 20px;
+    margin-left: 1%;
+    position: relative;
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+#repo-2 {
+    margin-top: 20px;
+    margin-left: 1%;
+    position: relative;
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+#repo-3 {
+    margin-top: 20px;
+    margin-left: 1%;
+    position: relative;
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+#repo-4 {
+    margin-top: 20px;
+    margin-left: 1%;
+    position: relative;
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+}
