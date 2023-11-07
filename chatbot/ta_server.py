@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, session
 import json
-import TeacherAssistant as teach_assist
+import chatbot.TeacherAssistantLlama2 as teach_assist
 from langchain.memory import ConversationBufferMemory
 from datetime import timedelta
 
