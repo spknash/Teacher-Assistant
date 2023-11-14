@@ -1,8 +1,14 @@
 import Image from 'next/image'
+import Link from 'next/link';
 
 export default function Home() {
 
   return (
-    <div></div>
-  )
+    <div>
+        <h1>Welcome to the Homepage</h1>
+        <Link href="/auth" passHref>
+            <button>Login/Signup with GitHub</button>
+        </Link>
+    </div>
+  );
 }
