@@ -54,8 +54,10 @@ def create_chat_bot(name, description, readme_file, file_ids):
 
 
 if __name__ == '__main__':
-    name = "blackjack"
-    description = "Blackjack Game"
-    file_ids = ["file-Dn0gdpiVxvJCco6mrQsi5pt4"]
-    readme_file = ["file-fWJXDoxJq7x0oyJIAKC6nw31"]
-    create_chat_bot(name=name, description=description, readme_file=readme_file, file_ids=file_ids)
+    start_chat()
+    
+    while True:
+        question = input("Enter your question (or type 'exit' to stop): ")
+        if question.lower() == 'exit':
+            break
+        ask_question(question)
