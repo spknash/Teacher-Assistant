@@ -1,13 +1,24 @@
 
+import {columns, Project} from "./columns"
+import {DataTable} from "./data-table"
+import { projects } from "./projects"
+import { ThemeProvider } from "@/components/theme-provider"
 
-export default function Home() {
+export default function Projects() {
 
     return (
-        <div className="w-full h-screen bg-slate-900">
-            <div className="text-left p-4">
-                <div className="text-4xl font-sans leading-[1.25] md:text-4xl text-white">Projects</div>
-                <div className="py-4 text-s font-sans leading-[1.25] md:text-s text-slate-400">Available Projects</div>
+        
+        <div className="w-full min-h-screen bg-slate-900">
+            <div className="text-left px-12 pt-8">
+                <h2 className="text-2xl font-bold tracking-tight text-white">Projects</h2>
+                <p className="text-muted-foreground text-slate-500">Available Projects</p>
             </div>
+
+            <div className="cointainer mx-auto px-12">
+                <DataTable columns={columns} data={projects} />
+            </div>
+            
         </div>
+        
     )
 }
