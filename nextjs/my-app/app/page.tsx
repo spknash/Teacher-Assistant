@@ -6,9 +6,7 @@ export default function Home() {
   return (
     <div>
         <h1>Welcome to the Homepage</h1>
-        <Link href="/api/auth" passHref>
-            <button>Login/Signup with GitHub</button>
-        </Link>
+      
     </div>
   );
 }
