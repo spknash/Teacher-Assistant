@@ -8,7 +8,7 @@ export const config = {
     logo: "https://next-auth.js.org/img/logo/logo-sm.png",
   },
   providers: [
-    GitHub,
+    GitHub
 
   ],
   callbacks: {

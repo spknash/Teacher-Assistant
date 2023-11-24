@@ -5,7 +5,7 @@ export default function Home() {
 
   return (
     <div>
-        <h1>Welcome to the Homepage</h1>
+        <h1>Welcome to the Homepage, login button should be above</h1>
       
     </div>
   );
