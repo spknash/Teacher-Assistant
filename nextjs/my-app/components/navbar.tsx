@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { Dispatch, SetStateAction, useState } from "react";
 import { FiMenu, FiArrowRight } from "react-icons/fi";
+import UserButton from "./user-button";
 
 const FlipNavWrapper = () => {
   return (
@@ -16,7 +17,7 @@ const FlipNav = () => {
   return (
     <nav className="bg-white p-4 border-b-[1px] border-gray-200 flex items-center justify-between relative">
       <NavLeft setIsOpen={setIsOpen} />
-      <NavRight />
+      
       <NavMenu isOpen={isOpen} />
     </nav>
   );
@@ -27,7 +28,7 @@ const LogInFlipNav = () => {
     return (
         <nav className="bg-white p-4 border-b-[1px] border-gray-200 flex items-center justify-between relative">
         <NavLeft setIsOpen={setIsOpen} />
-        <NavRight />
+       
         <NavMenu isOpen={isOpen} />
         </nav>
     );
@@ -97,26 +98,26 @@ const NavLink = ({ text, link}: { text: string, link:string }) => {
   );
 };
 
-const NavRight = () => {
-  return (
-    <div className="flex items-center gap-4">
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-800 bg-clip-text text-transparent font-medium rounded-md whitespace-nowrap"
-      >
-        Sign in
-      </motion.button>
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white font-medium rounded-md whitespace-nowrap"
-      >
-        Sign up
-      </motion.button>
-    </div>
-  );
-};
+// const NavRight = () => {
+//   return (
+//     <div className="flex items-center gap-4">
+//       <motion.button
+//         whileHover={{ scale: 1.05 }}
+//         whileTap={{ scale: 0.95 }}
+//         className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-800 bg-clip-text text-transparent font-medium rounded-md whitespace-nowrap"
+//       >
+//         Sign in
+//       </motion.button>
+//       <motion.button
+//         whileHover={{ scale: 1.05 }}
+//         whileTap={{ scale: 0.95 }}
+//         className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white font-medium rounded-md whitespace-nowrap"
+//       >
+//         Sign up
+//       </motion.button>
+//     </div>
+//   );
+// };
 
 const NavMenu = ({ isOpen }: { isOpen: boolean }) => {
   return (

@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import FlipNavWrapper from '@/components/navbar'
 import { ThemeProvider } from '@/components/theme-provider'
+import UserButton from '@/components/user-button'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +22,10 @@ export default function RootLayout({
       
       <body className={inter.className}>
       <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
-        <FlipNavWrapper />
+        <div className="header-container">
+              <FlipNavWrapper />
+              <UserButton />
+        </div>
         <div> {children}</div>
       </ThemeProvider>
         </body>

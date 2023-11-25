@@ -48,4 +48,13 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
   }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between; /* Aligns children to each side */
+    align-items: center; /* Centers children vertically */
+    background-color: white; /* Sets background color to white */
+    padding: 10px; /* Adds some padding around the header */
+    /* Additional styling as needed */
+  }
 }
