@@ -2,6 +2,10 @@ from flask import Flask, request, jsonify, session
 import json
 from datetime import timedelta
 from ta_chatbot import create_teacher_assistant, create_thread, ask_question
+from download_scripts import download_repo_content
+import requests
+
+
 
 
 
@@ -51,6 +55,8 @@ def ask():
     
     return jsonify({"response": answer})
 
+
+
 # API route to create a new teacher assistant
 @app.route('/create_ta', methods=['POST'])
 def create_ta():
@@ -58,6 +64,11 @@ def create_ta():
     # get project description and name from the request
     project_description = request.json.get('project_description', '')
     name = request.json.get('name', '')
+    complete_repo = request.json.get('complete', '')
+    template_repo = request.json.get('template', '')
+    download_repo_content(complete_repo, '')
+    
+    # add project to database here
 
     # get files from the request
     readme_file = request.json.get('readme_file', '')
