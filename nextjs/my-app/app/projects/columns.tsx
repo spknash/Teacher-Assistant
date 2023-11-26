@@ -2,7 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
-
+import { useRouter } from "next/router"
+import Link from "next/link"
 
 import {
     AlertDialog,
@@ -15,13 +16,22 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
+import { Router } from "lucide-react"
+
 
 export type Project = {
-    id: string
+    _id: string
     title: string
     description: string,
-    language: string
+    language: string,
+    completed_repo_url: string,
+    boilerplate_repo_url: string,
+    ta_id: string,
+    __v: number
 }
+
+
+
 
 export const columns: ColumnDef<Project>[] = [
     {
@@ -65,7 +75,9 @@ export const columns: ColumnDef<Project>[] = [
             return (
                 <div className="flex justify-center items-center space-x-2">
                     <Button variant="outline">Start</Button>
-                    <Button variant="default">Talk to Ta</Button>
+                    <Link href={`/${row.original._id}`}>
+                   <Button variant="default" >Talk to Ta</Button>
+                   </Link>
                 </div>
             )
         }

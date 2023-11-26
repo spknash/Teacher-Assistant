@@ -24,7 +24,9 @@ export default function RootLayout({
       <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
         <div className="header-container">
               <FlipNavWrapper />
+              <div className="px-5">
               <UserButton />
+              </div>
         </div>
         <div> {children}</div>
       </ThemeProvider>
