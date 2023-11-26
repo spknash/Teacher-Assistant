@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, session
+from flask_cors import CORS
 import json
 from datetime import timedelta
 from ta_chatbot import create_teacher_assistant, create_thread, ask_question
@@ -10,35 +11,36 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
 app.secret_key = 'your_secret_key'
 app.config['SECRET_KEY'] = 'your_secret_key'  
 app.config['SESSION_TYPE'] = 'filesystem'
+
 #app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 
 
 app = Flask(__name__)
 app.secret_key = 'some_random_string'
+CORS(app)
 
 @app.route('/start_chat', methods=['GET'])
 def start_chat():
     
     # created a new chat thread
     thread_id = create_thread()
-    
-    # stores the thread in the session
-    session['thread_id'] = thread_id
-    
-    return jsonify({"status": "success", "message": "Chat started!"})
+    return jsonify({"status": "success", "message": "Chat started!", "thread_id": thread_id})
 
 @app.route('/ask', methods=['POST'])
 def ask():
     # get the chat thread from the session
-    thread_id =session.get('thread_id')
+    thread_id = request.json.get('thread_id', '')
+    print(thread_id)
     if not thread_id:
         return jsonify({"status": "failed", "message": "Chat not started!"})
     
     # get the question from the request
     user_message = request.json.get('message', '')
+    print(user_message)
 
     # Get the ta id from the request
     ta_id = request.json.get('ta_id', '')
+    print(ta_id)
     
     # get file ids
     file_ids = request.json.get('file_ids', '')

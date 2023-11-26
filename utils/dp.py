@@ -2,10 +2,10 @@ import certifi
 import pymongo
 from pymongo.mongo_client import MongoClient
 
-uri = "mongodb+srv://davi:davi@cluster0.yftsyap.mongodb.net/?retryWrites=true&w=majority"
+uri = "mongodb+srv://davibenica:H24yzEwwnfcrErTL@teacher-assistant-db.8h8sorj.mongodb.net/"
 cluster = MongoClient(uri, tlsCAFile=certifi.where())
 db = cluster["TAdb"]
-collection = db["TAdb"]
+collection = db["Project"]
 
 
 def add_project_to_db(project_name, completed_repo_url, template_repo_url, project_description="no description"):

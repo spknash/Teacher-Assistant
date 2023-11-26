@@ -54,7 +54,7 @@
     justify-content: space-between; /* Aligns children to each side */
     align-items: center; /* Centers children vertically */
     background-color: white; /* Sets background color to white */
-    padding: 10px; /* Adds some padding around the header */
+     /* Adds some padding around the header */
     /* Additional styling as needed */
   }
 }
