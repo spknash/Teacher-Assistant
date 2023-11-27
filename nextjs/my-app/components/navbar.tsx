@@ -1,38 +1,53 @@
 "use client";
 import { motion } from "framer-motion";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useEffect } from "react";
 import { FiMenu, FiArrowRight } from "react-icons/fi";
 import UserButton from "./user-button";
+import type { Session } from "next-auth"
+import { auth } from "auth"
+import { SessionProvider } from "next-auth/react"
+import { useSession } from "next-auth/react"
 
-const FlipNavWrapper = () => {
+export default function FlipNavWrapper(){
+  const { data: session, update } = useSession();
+  
   return (
-    <div className="bg-gray-50">
-      <FlipNav />
-    </div>
+      <div className="bg-gray-50">
+        <FlipNav session={session} />
+      </div>
+
+    
+    
   );
 };
 
-const FlipNav = () => {
+const FlipNav = ({ session }: { session: Session | null }) => {
   const [isOpen, setIsOpen] = useState(false);
+  
   return (
     <nav className="bg-white p-4 border-b-[1px] border-gray-200 flex items-center justify-between relative">
-      <NavLeft setIsOpen={setIsOpen} />
+        <NavLeft setIsOpen={setIsOpen} session={session} />
       
-      <NavMenu isOpen={isOpen} />
+        <NavMenu isOpen={isOpen} />
+
     </nav>
   );
 };
 
-const LogInFlipNav = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-        <nav className="bg-white p-4 border-b-[1px] border-gray-200 flex items-center justify-between relative">
-        <NavLeft setIsOpen={setIsOpen} />
+// const LogInFlipNav = () => {
+//     const [isOpen, setIsOpen] = useState(false);
+    
+//     return (
+//         <nav className="bg-white p-4 border-b-[1px] border-gray-200 flex items-center justify-between relative">
+//           <NavLeft setIsOpen={setIsOpen} />
        
-        <NavMenu isOpen={isOpen} />
-        </nav>
-    );
-    }
+//           <NavMenu isOpen={isOpen} />
+
+       
+        
+//         </nav>
+//     );
+//     }
 
 const Logo = () => {
   // Temp logo from https://logoipsum.com/
@@ -57,12 +72,26 @@ const Logo = () => {
   );
 };
 
-const NavLeft = ({
-  setIsOpen,
-}: {
+
+type NavLeftProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-}) => {
+  session: Session | null;
+};
+
+
+
+const NavLeft: React.FC<NavLeftProps> = ({ setIsOpen, session }) => {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [sessionData, setSessionData] = useState(null);
+
+  useEffect(() => {
+    setIsSignedIn(!!session?.user);
+  }, [session]);
+  
+
+  
   return (
+    
     <div className="flex items-center gap-6">
       <motion.button
         whileHover={{ scale: 1.05 }}
@@ -73,6 +102,10 @@ const NavLeft = ({
         <FiMenu />
       </motion.button>
       <Logo />
+      
+      {isSignedIn && <NavLink text="Dashboard" link="dashboard" />}
+     
+      
       <NavLink text="Home" link = "/"/>
       <NavLink text="Projects" link = "projects"/>
       <NavLink text="Tuturial" link ="tuturial" />
@@ -156,7 +189,7 @@ const MenuLink = ({ text, link}: { text: string, link:string }) => {
   );
 };
 
-export default FlipNavWrapper;
+//export default FlipNavWrapper;
 
 const menuVariants = {
   open: {
