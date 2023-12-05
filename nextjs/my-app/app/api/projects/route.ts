@@ -34,6 +34,6 @@ export async function POST(request: NextApiRequest) {
 export async function GET() {
     await connectMongoDB();
 
-    const projects = await Project.find();
+    const projects = await Project.find({ user_email: { $exists: false, $eq: null } });
     return NextResponse.json({projects});
 }

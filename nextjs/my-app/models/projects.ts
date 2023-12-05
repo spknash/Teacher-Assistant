@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, {Schema, Types} from "mongoose";
 
 const ProjectSchema: Schema = new Schema({
     title: {type: String, required: true},
@@ -7,6 +7,8 @@ const ProjectSchema: Schema = new Schema({
     completed_repo_url: {type: String, required: true},
     boilerplate_repo_url: {type: String, required: true},
     ta_id: {type: String, required: true},
+    user_email: {type: String, required: false},
+    status: {type: String, required: false},
 });
 
 const Project = mongoose.models.Project||mongoose.model("Project", ProjectSchema);

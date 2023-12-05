@@ -48,6 +48,7 @@ import {
     }, []);
   
     return (
+      <div className="flex bg-slate-900 w-full min-h-screen">
       <section
         style={{ pointerEvents: dragging ? "none" : undefined }}
         className="overflow-hidden bg-slate-900 px-8 py-24 text-slate-50"
@@ -112,7 +113,7 @@ import {
               setDragging={setDragging}
             />
             <Card
-              imgUrl="/network.png"
+              imgUrl="/networking.png"
               testimonial="Be part of a collaborative community, sharing insights, receiving support, and growing together in your coding journey."
               handleDragEnd={handleDragEnd}
               dragProgress={dragProgress}
@@ -123,6 +124,7 @@ import {
           </motion.div>
         </div>
       </section>
+      </div>
     );
   };
   
@@ -207,6 +209,7 @@ import {
         </span>
         
       </motion.div>
+      
     );
   };
   

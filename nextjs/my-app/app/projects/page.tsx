@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import { columns, Project } from "./columns";
 import { DataTable } from "./data-table";
 import { ThemeProvider } from "@/components/theme-provider";
+import { auth } from '@/auth';
 
-async function getProjects(){
+async function getProjects(user_email: string | null){
     try {
         console.log("fetching projects");
         const res = await fetch('http://localhost:3000/api/projects', {
@@ -15,7 +16,18 @@ async function getProjects(){
             throw new Error("Failed to fetch projects");
         }
         console.log("fetched projects");
-        return await res.json();
+        const projects =  await res.json();
+
+        const modified_projects = projects.projects.map((project: Project) => {
+            return {
+                ...project,
+                user_email: user_email,
+            }
+        
+        });
+        return modified_projects;
+
+
     } catch (error) {
         console.error(error);
         // Handle the error appropriately
@@ -24,8 +36,14 @@ async function getProjects(){
 }
 
 export default async function Projects() {
-    const projects= await getProjects();
-    const data = projects.projects as Project[];
+    const session = await auth()
+
+    const user = session ? session.user : null;
+    const email = user? user.email as string: null;
+    
+    
+    const projects= await getProjects(email);
+    const data = projects as Project[];
     
     return (
         <div className="w-full min-h-screen bg-slate-900">

@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import UserButton from '@/components/user-button'
 import { SessionProvider } from "next-auth/react"
 import { auth } from "auth"
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,30 +19,30 @@ export default async function RootLayout({children,}: { children: React.ReactNod
   const session = await auth()
   if (session?.user) {
     session.user = {
+      id: session.user.id,
       name: session.user.name,
       email: session.user.email,
       image: session.user.image,
     }
   }
   return (
-    <SessionProvider session={session}>
-
-    
-      <html lang="en">
-        
-        <body className={inter.className}>
-        <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
-          <div className="header-container">
-                <FlipNavWrapper />
-                <div className="px-5">
-                <UserButton />
-                </div>
-          </div>
-          <div> {children}</div>
-        </ThemeProvider>
-          </body>
-        
-      </html>
+    <SessionProvider session={session}> 
+    <html lang="en">
+      
+      <body className={inter.className}>
+      <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
+        <div className="header-container">
+              <FlipNavWrapper />
+              <div className="px-5">
+              <UserButton />
+              </div>
+        </div>
+        <div> {children}</div>
+      </ThemeProvider>
+      <Toaster />
+        </body>
+      
+    </html>
     </SessionProvider>
   )
 }
