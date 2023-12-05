@@ -38,9 +38,9 @@ def get_repo_content(_URL, path=""):
     for item in data:
         if item['type'] == 'file':
             file_content = fetch_file_content(item['download_url'])
-            content_list.append(f"\nFILE: {item['name']}\n{file_content}\nENDFILE")
+            content_list.append(f"\nFILE: {item['name']}\n{file_content}\nENDFILE({item['name']})\n")
         elif item['type'] == 'dir':
-            dir_content = get_repo_content(owner, repo, item['path'])
+            dir_content = get_repo_content(url, item['path'])
             content_list.append(f"\nDIRECTORY: {item['name']}\n{dir_content}\nENDDIR")
 
 

@@ -137,22 +137,22 @@ def ask_question(ta_id: str,thread_id: str, question: str, file_ids : List[str] 
     return res
 
 
-#file_id = ["file-fWJXDoxJq7x0oyJIAKC6nw31"]
-#description = "Blackjack Game"
-#rompt = generate_prompt(file_id, description)
-#print(prompt)
+file_id = ["file-fWJXDoxJq7x0oyJIAKC6nw31"]
+description = "Blackjack Game"
+prompt = generate_prompt(file_id, description)
+print(prompt)
 
-#ta_id = create_teacher_assistant(file_id, "Blackjack Game", file_id, description)
+# ta_id = create_teacher_assistant(file_id, "Blackjack Game", file_id, description)
 
-#ta_id = "asst_X2e5fUMlGtTA1th9pNAKn4k3"
+# ta_id = "asst_X2e5fUMlGtTA1th9pNAKn4k3"
 
-#thread = create_thread()
+# thread = create_thread()
 
-#question = "how many cards in blackjack?"
+# question = "how many cards in blackjack?"
 
-#res = ask_question(ta_id, thread, question)
+# res = ask_question(ta_id, thread, question)
 
-#print(res)
+# print(res)
 
 
     

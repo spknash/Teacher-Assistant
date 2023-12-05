@@ -10,12 +10,11 @@ COPY . /app
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 5000 available to the world outside this container
-EXPOSE 5000
+# Set the working directory to /app/chatbot
+WORKDIR /app/chatbot
 
-# Define environment variable
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
+# Make port (e.g., 5000) available to the world outside this container
+EXPOSE 8080
 
-# Run flask run when the container launches
-CMD ["flask", "run"]
+# Run ta_server.py when the container launches
+CMD ["python", "ta_server.py"]
