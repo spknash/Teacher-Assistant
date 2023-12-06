@@ -30,6 +30,8 @@ def generate_prompt(file_ids: List[str], description: str) -> str:
     prompt = " Generate a prompt to make a LLM act as a helpful computer science teacher assistant with a goal to help a student who is working on a coding project. Here is a brief description of the project: " + description +  ". The README.md file is also attached read it to gain more background about the project. I want the ai to not just give out answer to the project but help the student understand and be able able to complete the task. Mention to the ai that it has access to the completed project."
     thread = client.beta.threads.create()
     
+    print("*****************")
+    print(file_ids)
 
     message = client.beta.threads.messages.create(
         thread_id=thread.id,
@@ -137,10 +139,10 @@ def ask_question(ta_id: str,thread_id: str, question: str, file_ids : List[str] 
     return res
 
 
-file_id = ["file-fWJXDoxJq7x0oyJIAKC6nw31"]
-description = "Blackjack Game"
-prompt = generate_prompt(file_id, description)
-print(prompt)
+#file_id = ["file-fWJXDoxJq7x0oyJIAKC6nw31"]
+#description = "Blackjack Game"
+#prompt = generate_prompt(file_id, description)
+#print(prompt)
 
 # ta_id = create_teacher_assistant(file_id, "Blackjack Game", file_id, description)
 

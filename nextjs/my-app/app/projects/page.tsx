@@ -4,6 +4,21 @@ import { columns, Project } from "./columns";
 import { DataTable } from "./data-table";
 import { ThemeProvider } from "@/components/theme-provider";
 import { auth } from '@/auth';
+import { Button } from '@/components/ui/button';
+import upload from "/public/upload.svg";
+import Image from "next/image";
+import ProjectHeader from '@/components/project_header';
+
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog"
 
 
 async function getProjects(user_email: string | null){
@@ -45,14 +60,15 @@ export default async function Projects() {
     
     const projects= await getProjects(email);
     const data = projects as Project[];
+
+
     
     
     return (
         <div className="w-full min-h-screen bg-slate-900">
-            <div className="text-left px-12 pt-8">
-                <h2 className="text-2xl font-bold tracking-tight text-white">Projects</h2>
-                <p className="text-muted-foreground text-slate-500">Available Projects</p>
-            </div>
+
+            <ProjectHeader />
+            
 
             <div className="cointainer mx-auto px-12">
                 <DataTable columns={columns} data={data} />

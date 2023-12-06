@@ -5,6 +5,8 @@ from datetime import timedelta
 from ta_chatbot import create_teacher_assistant, create_thread, ask_question
 from download_scripts import download_repo_content
 import requests
+from db import add_project_to_db
+from download_scripts import download_repo_content, create_file, fetch_file_content
 
 
 
@@ -65,23 +67,31 @@ def create_ta():
 
     # get project description and name from the request
     project_description = request.json.get('project_description', '')
-    name = request.json.get('name', '')
+    title = request.json.get('title', '')
     complete_repo = request.json.get('complete', '')
     template_repo = request.json.get('template', '')
-    download_repo_content(complete_repo, '')
+    language = request.json.get('language', '')
     
-    # add project to database here
+    content, readme_file = download_repo_content(complete_repo)
+    file_ids, readme_id = create_file(readme_file, content)
 
-    # get files from the request
-    readme_file = request.json.get('readme_file', '')
-    file_ids = request.json.get('file_ids', '')
+    print("***********************")
+    print(file_ids)
 
-    # create a new teacher assistant
-    ta_id = create_teacher_assistant(file_ids, name, readme_file, project_description)
+    ta_id = create_teacher_assistant(file_ids, title, [readme_file], project_description)
+
 
     if ta_id == None:
         return jsonify({"status": "failed", "message": "Teacher assistant creation failed!"})
     
+    # Add project to database
+
+    res = add_project_to_db(title=title, completed_repo_url=complete_repo, template_repo_url=template_repo, language=language, description=project_description, ta_id=ta_id)
+
+    if res == "Project already exists in the database":
+        return jsonify({"status": "failed", "message": "Project already exists in the database"})
+    
+
     return jsonify({"status": "success", "message": "Teacher assistant created!", "ta_id": ta_id})
 
 
