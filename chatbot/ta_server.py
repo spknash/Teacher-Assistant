@@ -75,10 +75,10 @@ def create_ta():
     content, readme_file = download_repo_content(complete_repo)
     file_ids, readme_id = create_file(readme_file, content)
 
-    print("***********************")
-    print(file_ids)
+    
 
-    ta_id = create_teacher_assistant(file_ids, title, [readme_file], project_description)
+
+    ta_id = create_teacher_assistant(file_ids, title, [readme_id], project_description)
 
 
     if ta_id == None:
