@@ -8,6 +8,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "../ui/tabs";
 import { useRouter } from "next/router";
 
+
     
 
 
@@ -20,7 +21,9 @@ interface DashboardProps {
 
 export default function Dashboard({user, completed, active}: DashboardProps){
     const numActive = active.length;
-    const numCompleted = completed.length;    
+    const numCompleted = completed.length;
+    
+
     
 
     return (

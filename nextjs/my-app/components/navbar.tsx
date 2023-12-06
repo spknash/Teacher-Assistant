@@ -103,7 +103,6 @@ const NavLeft: React.FC<NavLeftProps> = ({ setIsOpen, session }) => {
       </motion.button>
       <Logo />
       
-      {isSignedIn && <NavLink text="Dashboard" link="dashboard" />}
      
       
       <NavLink text="Home" link = "/"/>

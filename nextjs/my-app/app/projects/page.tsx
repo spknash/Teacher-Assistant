@@ -5,6 +5,7 @@ import { DataTable } from "./data-table";
 import { ThemeProvider } from "@/components/theme-provider";
 import { auth } from '@/auth';
 
+
 async function getProjects(user_email: string | null){
     try {
         console.log("fetching projects");
@@ -44,6 +45,7 @@ export default async function Projects() {
     
     const projects= await getProjects(email);
     const data = projects as Project[];
+    
     
     return (
         <div className="w-full min-h-screen bg-slate-900">

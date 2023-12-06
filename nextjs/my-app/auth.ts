@@ -1,5 +1,5 @@
 import NextAuth from "next-auth"
-import GitHub from "next-auth/providers/github"
+import GitHubProvider from "next-auth/providers/github"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import connectMongoDB from "@/lib/mongodb";
 
@@ -13,7 +13,12 @@ export const config = {
     logo: "https://next-auth.js.org/img/logo/logo-sm.png",
   },
   providers: [
-    GitHub
+      GitHubProvider({
+        clientId: process.env.AUTH_GITHUB_ID,
+        clientSecret: process.env.AUTH_GITHUB_SECRET,
+        authorization: {params:{scope: 'repo user:email'}}
+        
+      }),
 
   ],
   callbacks: {

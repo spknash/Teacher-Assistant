@@ -16,7 +16,7 @@ import { Avatar, AvatarImage , AvatarFallback} from "@/components/ui/avatar";
 import {auth} from "auth";
 import { SignIn, SignOut } from "@/components/auth-components";
 import { Project } from "../projects/columns";
-import  Chat  from "@/components/chat";
+import Chat from "@/components/chat";
 import { User } from "@/components/chat";
 
 async function startChat(){

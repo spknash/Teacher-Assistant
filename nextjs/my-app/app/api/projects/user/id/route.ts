@@ -22,7 +22,7 @@ export async function POST(request: NextApiRequest) {
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
-        console.log(user._id);
+        
         // Convert ObjectId to string
         const account = await Accounts.findOne({ userId: user._id.toString() });
 

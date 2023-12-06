@@ -15,7 +15,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-import { time } from "console"
+import { error, time } from "console"
 import { useRouter } from "next/router"
 import upArrow from "public/uparrow.svg"
 import Image from "next/image"
@@ -23,6 +23,23 @@ import githubLogo from "public/github.svg"
 import chat from "public/chat.svg"
 import check from "public/check.svg"
 import x from "public/x.svg"
+import { Octokit, App } from "octokit";
+import { Input } from "../ui/input"
+
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog"
+
+import { useState } from "react"
+
+  
 
 export type Project = {
     _id: string
@@ -94,6 +111,68 @@ async function handleMarkIncompleteButton(project: Project){
         return [];
     }
 
+}
+
+ async function forkRepo(url:string, token:string, name:string){
+    const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/]+)/;
+    const match = url.match(regex);
+
+    const octokit = new Octokit({auth: token});
+
+    
+
+    if (!match){
+        throw new Error("Invalid repo url");
+    }
+    else{
+        const owner = match[1];
+        const repo = match[2];
+       try{
+       const res = await octokit.request('POST /repos/{owner}/{repo}/forks', {
+            owner: owner,
+            repo: repo,
+            name: name
+        });
+        
+        return res.status;
+       }
+       catch(error){
+              console.log(error);
+              throw error;
+         }
+
+    
+        
+    }
+
+
+}
+
+export async function getAccountDetail(user_email: string){
+    console.log(user_email);
+    console.log("***************");
+    try{
+        const res = await fetch(`http://localhost:3000/api/projects/user/id`, {
+            cache: "no-store",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({user_email: user_email}),
+        });
+        if (!res.ok) {
+            throw new Error("Failed to fetch projects");
+        }
+        console.log("fetched Account");
+        console.log(res);
+        return res.json();
+
+    }
+    catch(error){
+        console.error(error);
+        // Handle the error appropriately
+        return [];
+    }   
 }
 
 
@@ -225,21 +304,121 @@ export const active_columns: ColumnDef<Project>[] = [
     },
     {
         id:"completed_repo_url",
-        accessorKey: "completed_repo_url",
+        accessorKey: "boilerplate_repo_url",
         cell: ({ row }) => {
 
             return (
-                <a href={row.original.boilerplate_repo_url} target="_blank" rel="noopener noreferrer">
-                        <Button variant="ghost">
-                        <Image src={githubLogo} alt="github logo" width={20} height={20} className="p-1"/>
-                            View Boilerplate Repo
-                        </Button>
-                        
-                </a>
+                <div>
+                    <a href={row.original.boilerplate_repo_url} target="_blank" rel="noopener noreferrer">
+                            <Button variant="ghost">
+                            <Image src={githubLogo} alt="github logo" width={20} height={20} className="p-1"/>
+                                View Boilerplate Repo
+                            </Button>  
+                    </a>
+                </div>
                 
             )
         }
     },
+    {
+        id:"fork_repo",
+        accessorKey: "boilerplate_repo_url",
+        cell: ({ row }) => {
+            const [isDialogOpen, setIsDialogOpen] = useState(false)
+            const [repoName, setRepoName] = useState("");
+            const [error, setError] = useState("");
+            const {toast} = useToast();
+
+
+            async function handleForkSubmit(){
+
+                if (repoName === ""){
+                    setError("Please enter a repo name");
+                    return;
+                }
+
+                const account = await getAccountDetail(row.original.user_email);
+                
+                if (account === null){
+                    setError("Unable to get github token");
+                    return;
+                }
+                
+                
+
+                const token =  account.access_token;
+                
+                if (token === ""){
+                    setError("Unable to get github token");
+                    return;
+                }
+
+                const status = await forkRepo(row.original.boilerplate_repo_url, token, repoName);
+
+                
+                
+                if (status == 202){
+                    setIsDialogOpen(false);
+                    setRepoName("");
+                    setError("");
+                    toast({title:"Repo Forked", description: "Your repo has been forked to your github account"})
+                    
+                }
+                else{
+                    setError("Unable to fork repo");
+                }
+                
+
+
+            }
+
+            return(
+            <div>
+                
+
+                <Dialog onOpenChange={setIsDialogOpen} open={isDialogOpen} >
+                    <DialogTrigger asChild>
+                        <Button variant="outline">
+                            <Image src={githubLogo} alt="github logo" width={20} height={20} className="p-1"/>
+                            Fork Repo
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle> Fork Boiler Plate Repo</DialogTitle>
+                            <DialogDescription>
+                                Forking will create a copy of the repo in your github account
+                            </DialogDescription>
+                            
+                        </DialogHeader>
+                        <div className="py-2">
+                            <div className="py-3 text-sm">Name Your Repo:</div>
+                            <Input placeholder="Repo Name" className="w-full" id="fork-name" value={repoName} onChange={(e)=>setRepoName(e.target.value)}/>
+                            <p className="text-red-500 text-sm p-2">{error}</p>
+                            
+                        </div>
+                        <DialogFooter>
+                        <div>
+                        
+                        <Button variant="outline" type="submit" onClick={handleForkSubmit}>
+                            Fork Repo!
+                        </Button>
+
+                        
+                        
+                        </div>
+                        
+                    </DialogFooter>
+                        
+                    </DialogContent>
+                    
+                </Dialog>
+
+            </div>
+            )
+        }
+    },
+
 
     {
         id: "butons",
